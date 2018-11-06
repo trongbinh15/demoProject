@@ -1,20 +1,13 @@
 {
-  "name": "blognodejs",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "SET NODE_ENV=dev && node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "binh binh",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.18.3",
-    "config": "^2.0.1",
-    "ejs": "^2.6.1",
-    "express": "^4.16.4",
-    "express-session": "^1.15.6",
-    "mysql": "^2.16.0"
-  }
+    "name": "application-name",
+    "version": "0.0.1",
+    "private": true,
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "express": "2.5.10",
+        "jade": ">= 0.0.1"
+    }
 }

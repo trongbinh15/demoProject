@@ -1,24 +1,56 @@
-var express= require('express');
-var config=require('config');
-var bodyParser=require('body-parser');
 
-var app=express();
-//body parser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true}));
+/**
+ * Module dependencies.
+ */
 
-app.set("views",__dirname+ "/apps/views");
-app.set("view engine", "ejs");
+var express = require('express'),
+  routes = require('./routes'),
+  api = require('./routes/api');
 
-//static folder
-app.use("/static", express.static(__dirname+"/pulic"));
+var app = module.exports = express.createServer();
 
-var controllers=require(__dirname+"/apps/controllers");
+// Configuration
 
-app.use(controllers);
+app.configure(function(){
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'jade');
+  app.set('view options', {
+    layout: false
+  });
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.static(__dirname + '/public'));
+  app.use(app.router);
+});
 
-var host=config.get("server.host");
-var port=process.env.PORT || config.get("server.port");
-app.listen(port, host, function(){
-    console.log("Server is running on port", port);
+
+app.configure('development', function(){
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+});
+
+app.configure('production', function(){
+  app.use(express.errorHandler());
+});
+
+// Routes
+
+app.get('/', routes.index);
+app.get('/partials/:name', routes.partials);
+
+// JSON API
+
+app.get('/api/posts', api.posts);
+
+app.get('/api/post/:id', api.post);
+app.post('/api/post', api.addPost);
+app.put('/api/post/:id', api.editPost);
+app.delete('/api/post/:id', api.deletePost);
+
+// redirect all others to the index (HTML5 history)
+app.get('*', routes.index);
+
+// Start server
+
+app.listen(process.env.PORT, function(){
+  console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
