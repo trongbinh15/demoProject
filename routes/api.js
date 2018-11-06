@@ -8,7 +8,7 @@ var data = {
   "posts": [
     {
       "title": "Post 1",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      "text": "Nguyễn Trọng Bình"
     },
     {
       "title": "Post 2: Sed egestas",
